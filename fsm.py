@@ -1,7 +1,7 @@
 from transitions.extensions import GraphMachine
 
 from utils import send_text_message
-
+import os
 
 class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
@@ -31,7 +31,7 @@ class TocMachine(GraphMachine):
 
     def on_enter_state1(self, event):
         print("I'm entering state1")
-
+        os.system('dcard download -f photography -n 5')
         sender_id = event['sender']['id']
         responese = send_text_message(sender_id, "I'm entering state1")
 
