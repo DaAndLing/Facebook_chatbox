@@ -3,7 +3,6 @@ from bottle import route, run, request, abort, static_file
 from fsm import TocMachine
 import os
 
-#hi
 VERIFY_TOKEN = "123456789"
 machine = TocMachine(
     states=[
