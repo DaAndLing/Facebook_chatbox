@@ -31,7 +31,6 @@ class TocMachine(GraphMachine):
 
     def on_enter_state1(self, event):
         print("I'm entering state1")
-        os.system('dcard download -f photography -n 5')
         sender_id = event['sender']['id']
         responese = send_text_message(sender_id, "I'm entering state1")
 
