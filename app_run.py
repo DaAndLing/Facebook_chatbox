@@ -6,33 +6,84 @@ import os
 VERIFY_TOKEN = "123456789"
 machine = TocMachine(
     states=[
-        'user',
-        'state1',
-        'state2'
+        'user_state',
+        'weather_state',
+        'weather_city_state',
+        'dcard_state',
+        'pet_state',
+        'pet_limit_state',
+        'pet_unlimit_state',
+        'sex_state',
+        'sex_limit_state',
+        'sex_unlimit_state'
     ],
     transitions=[
         {
-            'trigger': 'advance',
-            'source': 'user',
-            'dest': 'state1',
-            'conditions': 'is_going_to_state1'
+            'trigger': 'user_advance',
+            'source': 'user_state',
+            'dest': 'weather_state',
+            'conditions': 'is_going_to_weather_state'
         },
         {
-            'trigger': 'advance',
-            'source': 'user',
-            'dest': 'state2',
-            'conditions': 'is_going_to_state2'
+            'trigger': 'user_advance',
+            'source': 'user_state',
+            'dest': 'dcard_state',
+            'conditions': 'is_going_to_dcard_state'
+        },
+        {
+            'trigger': 'weather_advance',
+            'source': 'weather_state',
+            'dest': 'weather_city_state',
+        },
+        {
+            'trigger': 'dcard_advance',
+            'source': 'dcard_state',
+            'dest': 'pet_state',
+            'conditions': 'is_goint_to_pet_state'
+        },
+        {
+            'trigger': 'dcard_advance',
+            'source': 'dcard_state',
+            'dest': 'sex_state',
+            'conditions': 'is_goint_to_sex_state'
+        },
+        {
+            'trigger': 'pet_advance',
+            'source': 'pet_state',
+            'dest': 'pet_limit_state',
+            'conditions': 'is_goint_to_pet_limit_state'
+        },
+        {
+            'trigger': 'pet_advance',
+            'source': 'pet_state',
+            'dest': 'pet_unlimit_state',
+            'conditions': 'is_goint_to_pet_unlimit_state'
+        },
+        {
+            'trigger': 'sex_advance',
+            'source': 'sex_state',
+            'dest': 'sex_limit_state',
+            'conditions': 'is_goint_to_sex_limit_state'
+        },
+        {
+            'trigger': 'sex_advance',
+            'source': 'sex_state',
+            'dest': 'sex_unlimit_state',
+            'conditions': 'is_goint_to_sex_unlimit_state'
         },
         {
             'trigger': 'go_back',
             'source': [
-                'state1',
-                'state2'
+                'weather_city_state',
+                'pet_limit_state',
+                'pet_unlimit_state',
+                'sex_limit_state',
+                'sex_unlimit_state',
             ],
-            'dest': 'user'
+            'dest': 'user_state'
         }
     ],
-    initial='user',
+    initial='user_state',
     auto_transitions=False,
     show_conditions=True,
 )
@@ -54,16 +105,25 @@ def setup_webhook():
 
 @route("/webhook", method="POST")
 def webhook_handler():
+    # return 'OK'
     body = request.json
     print('\nFSM STATE: ' + machine.state)
-    print('REQUEST BODY: ')
-    print(body)
+    # print('REQUEST BODY: ')
+    # print(body)
 
     if body['object'] == "page":
         event = body['entry'][0]['messaging'][0]
-        machine.advance(event)
+        if machine.state == 'user_state':
+            machine.user_advance(event)
+        elif machine.state == 'weather_state':
+            machine.weather_advance(event)
+        elif machine.state == 'dcard_state':
+            machine.dcard_advance(event)
+        elif machine.state == 'pet_state':
+            machine.pet_advance(event)
+        else: #if machine.state == 'sex'
+            machine.sex_advance(event)
         return 'OK'
-#test
 
 @route('/show-fsm', methods=['GET'])
 def show_fsm():
@@ -73,4 +133,5 @@ def show_fsm():
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 33507))
-    run(host='0.0.0.0', port=port, debug=True, reloader=True)
+    run(host='0.0.0.0', port=port, debug=True)
+    #run(host='0.0.0.0', port=port, debug=True, reloader=True)
