@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-def func(string):
+def google(string):
   # Google 搜尋 URL
   google_url = 'https://www.google.com.tw/search'
 
@@ -24,10 +24,13 @@ def func(string):
     items = soup.select('div.g > h3.r > a[href^="/url"]')
     for i in items:
       if len(i['href'].partition("=")[2]) < 300:
-        return_string += "標題：" + i.text + "\n網址：" + i['href'].partition("=")[2] + "\n"
+        return_string += "標題：" + i.text + "\n網址：" + i['href'].partition("=")[2] + "\n\n"
       # print(len(i['href'].partition("=")[2]))
       # # 標題
       # print("標題：" + i.text)
       # # 網址
       # print("網址：" + i.get('href'))
   print(return_string)
+  return(return_string)
+
+# google('dick')

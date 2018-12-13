@@ -15,7 +15,9 @@ machine = TocMachine(
         'pet_unlimit_state',
         'sex_state',
         'sex_limit_state',
-        'sex_unlimit_state'
+        'sex_unlimit_state',
+        'google_state',
+        'google_search_state'
     ],
     transitions=[
         {
@@ -29,6 +31,12 @@ machine = TocMachine(
             'source': 'user_state',
             'dest': 'dcard_state',
             'conditions': 'is_going_to_dcard_state'
+        },
+        {
+            'trigger': 'user_advance',
+            'source': 'user_state',
+            'dest': 'google_state',
+            'conditions': 'is_going_to_google_state'
         },
         {
             'trigger': 'weather_advance',
@@ -72,6 +80,11 @@ machine = TocMachine(
             'conditions': 'is_goint_to_sex_unlimit_state'
         },
         {
+            'trigger': 'google_advance',
+            'source': 'google_state',
+            'dest': 'google_search_state',
+        },
+        {
             'trigger': 'go_back',
             'source': [
                 'weather_city_state',
@@ -79,6 +92,7 @@ machine = TocMachine(
                 'pet_unlimit_state',
                 'sex_limit_state',
                 'sex_unlimit_state',
+                'google_search_state'
             ],
             'dest': 'user_state'
         }
@@ -121,8 +135,10 @@ def webhook_handler():
             machine.dcard_advance(event)
         elif machine.state == 'pet_state':
             machine.pet_advance(event)
-        else: #if machine.state == 'sex'
+        elif machine.state == 'sex_state':
             machine.sex_advance(event)
+        else:
+            machine.google_advance(event)
         return 'OK'
 
 @route('/show-fsm', methods=['GET'])

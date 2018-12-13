@@ -5,26 +5,20 @@ import re
 import random
 
 def weather(string):
+  city_list = {'台北':"Taipei_City.htm", '新北':"New_Taipei_City.htm",
+               '桃園':"Taoyuan_City.htm", '台中':"Taichung_City.htm",
+                '台南':"Tainan_City.htm", '高雄':"Kaohsiung_City.htm",
+                "基隆":"Keelung_City.htm", '新竹':"Hsinchu_City.htm",
+                '苗栗':"Miaoli_County.htm", '彰化':"Changhua_County.htm",
+                '南投':"Nantou_County.htm", '雲林':"Yunlin_County.htm",
+                '嘉義':"Chiayi_City.htm", '嘉義':"Chiayi_County.htm",
+                '屏東':"Pingtung_County.htm", '宜蘭':"Yilan_County.htm",
+                '花蓮':"Hualien_County.htm", '台東':"Taitung_County.htm",
+                '澎湖':"Penghu_County.htm", '金門':"Kinmen_County.htm",
+                '連江':"Lienchiang_County.htm"}
 
-  if '台' in string and '台東' not in string:
-    string = '臺' + string[1]
-  url = 'https://www.cwb.gov.tw/V7/'
-  headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36'}
-
-  resp = requests.get(url, headers=headers)
-  #use UTF-8
-  resp.encoding = resp.apparent_encoding
-  soup = BeautifulSoup(resp.text,"html.parser")
-  # sel = soup.find_all(title=re.compile(' '))
-  sel_city = soup.select("div#divTitle a")
-  flag = 0
-  for city in sel_city:
-    if flag == 0:
-      for untaged in city:
-        if string in untaged:
-          return_url = 'https://www.cwb.gov.tw' + city['href']
-          flag = 1
-  # print(return_url)
+  return_url = 'https://www.cwb.gov.tw/V7/forecast/taiwan/' + city_list[string]
+  print(return_url)
   return return_url
 
-# weather('宜蘭')
+# weather('屏東')

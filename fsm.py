@@ -1,9 +1,9 @@
 from transitions.extensions import GraphMachine
 
 from utils import send_text_message, send_image_url
-from one_pic import pic_url
+from one_pic import pic_url, pic_url_limit
 from weather import weather
-
+from google import google
 class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(
@@ -22,6 +22,12 @@ class TocMachine(GraphMachine):
         if event.get("message"):
             text = event['message']['text']
             return text.lower() == 'dcard'
+        return False
+
+    def is_going_to_google_state(self, event):
+        if event.get("message"):
+            text = event['message']['text']
+            return text.lower() == 'google'
         return False
 
     def is_goint_to_pet_state(self, event):
@@ -79,7 +85,7 @@ class TocMachine(GraphMachine):
     def on_enter_dcard_state(self, event):
         print("I'm entering dcard state")
         sender_id = event['sender']['id']
-        send_text_message(sender_id, "你想找的圖片是?(Pet or Sex)")
+        send_text_message(sender_id, "你想找的圖片是?")
 
     def on_enter_pet_state(self, event):
         print("I'm entering pet state")
@@ -89,10 +95,13 @@ class TocMachine(GraphMachine):
     def on_enter_pet_limit_state(self, event):
         print("I'm entering pet limit state")
         sender_id = event['sender']['id']
-        # url = pic_url("pet")
-        responese = send_text_message(sender_id, "Pet limit~")
-        # responese = send_text_message(sender_id, "From Dcard~")
-        # responese = send_image_url(sender_id, url)
+        url = pic_url_limit("pet", int(event['message']['text']))
+        if url == 'Not found':
+            responese = send_text_message(sender_id, "太貪心囉~")
+            responese = send_text_message(sender_id, "短時間內沒辦法幫你找到")
+        else:
+            responese = send_text_message(sender_id, "From Dcard~")
+            responese = send_image_url(sender_id, url)
         self.go_back()
 
     def on_enter_pet_unlimit_state(self, event):
@@ -111,10 +120,14 @@ class TocMachine(GraphMachine):
     def on_enter_sex_limit_state(self, event):
         print("I'm entering sex limit state")
         sender_id = event['sender']['id']
-        # url = pic_url("sex")
+        url = pic_url_limit("sex", int(event['message']['text']))
         responese = send_text_message(sender_id, "Sex limit~")
-        # responese = send_text_message(sender_id, "From Dcard~")
-        # responese = send_image_url(sender_id, url)
+        if url == 'Not found':
+            responese = send_text_message(sender_id, "太貪心囉~")
+            responese = send_text_message(sender_id, "短時間內沒辦法幫你找到")
+        else:
+            responese = send_text_message(sender_id, "From Dcard~")
+            responese = send_image_url(sender_id, url)
         self.go_back()
 
     def on_enter_sex_unlimit_state(self, event):
@@ -125,3 +138,10 @@ class TocMachine(GraphMachine):
         responese = send_image_url(sender_id, url)
         self.go_back()
 
+    def on_enter_google_search_state(self, event):
+        print("I'm entering google search state")
+        sender_id = event['sender']['id']
+        search_result = google(event['message']['text'])
+        send_text_message(sender_id, "我們幫你從Google找到：")
+        send_text_message(sender_id, search_result)
+        self.go_back()
