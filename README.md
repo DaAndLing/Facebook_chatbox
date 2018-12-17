@@ -7,7 +7,7 @@ Deploying a Facebook chatbox To Heroku📝
 * 在Dcard上選擇自己想要的板爬蟲。
 * 輸入關鍵字，快速Google。
 
-##功能介紹：
+## 功能介紹：
 
 ### 查詢天氣
 
@@ -28,14 +28,17 @@ Deploying a Facebook chatbox To Heroku📝
 <img src = 'Demo_Pic/pic_unlimit.jpg' width="300px">
 <img src = 'Demo_Pic/pic_limit.jpg' width="300px">
 會前往Dcrad，選取自己想要的板，並爬取圖片。
+
 ```cmd
 Dcard
 ```
 選擇要爬取圖片
+
 ```cmd
 Pet
 ```
 選擇要爬的板
+
 ```cmd
 10
 ```
@@ -44,6 +47,7 @@ Pet
 
 #### 錯誤
 符合此條件的照片太少。
+
 <img src = 'Demo_Pic/not_found.jpg' width="300px">
 
 ### Google快速搜尋
