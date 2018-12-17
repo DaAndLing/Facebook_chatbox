@@ -135,4 +135,4 @@ def pic_url_limit(category, limit):
     return sel_jpg[0]["src"]
 
 
-# pic_url_limit("sex", 150)
+# pic_url_limit("sex", 50)

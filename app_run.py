@@ -1,7 +1,7 @@
 from bottle import route, run, request, abort, static_file
 
 from fsm import TocMachine
-import os
+import os 
 
 VERIFY_TOKEN = "123456789"
 machine = TocMachine(
@@ -87,12 +87,18 @@ machine = TocMachine(
         {
             'trigger': 'go_back',
             'source': [
-                'weather_city_state',
-                'pet_limit_state',
-                'pet_unlimit_state',
-                'sex_limit_state',
-                'sex_unlimit_state',
-                'google_search_state'
+            		'user_state',
+            		'weather_state',
+            		'weather_city_state',
+            		'dcard_state',
+            		'pet_state',
+            		'pet_limit_state',
+            		'pet_unlimit_state',
+            		'sex_state',
+            		'sex_limit_state',
+            		'sex_unlimit_state',
+            		'google_state',
+            		'google_search_state'
             ],
             'dest': 'user_state'
         }
@@ -122,23 +128,27 @@ def webhook_handler():
     # return 'OK'
     body = request.json
     print('\nFSM STATE: ' + machine.state)
+    print('Recieve msg:' + body['entry'][0]['messaging'][0]['message']['text'])
     # print('REQUEST BODY: ')
     # print(body)
 
     if body['object'] == "page":
         event = body['entry'][0]['messaging'][0]
-        if machine.state == 'user_state':
-            machine.user_advance(event)
-        elif machine.state == 'weather_state':
-            machine.weather_advance(event)
-        elif machine.state == 'dcard_state':
-            machine.dcard_advance(event)
-        elif machine.state == 'pet_state':
-            machine.pet_advance(event)
-        elif machine.state == 'sex_state':
-            machine.sex_advance(event)
+        if event['message']['text'].lower() == 'go back':
+        	machine.go_back(event)
         else:
-            machine.google_advance(event)
+	        if machine.state == 'user_state':
+	            machine.user_advance(event)
+	        elif machine.state == 'weather_state':
+	            machine.weather_advance(event)
+	        elif machine.state == 'dcard_state':
+	            machine.dcard_advance(event)
+	        elif machine.state == 'pet_state':
+	            machine.pet_advance(event)
+	        elif machine.state == 'sex_state':
+	            machine.sex_advance(event)
+	        else:
+	            machine.google_advance(event)
         return 'OK'
 
 @route('/show-fsm', methods=['GET'])

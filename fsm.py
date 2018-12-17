@@ -66,8 +66,10 @@ class TocMachine(GraphMachine):
             return not text.lower().isdigit()
         return False
 
-    def on_enter_user_state(self):
+    def on_enter_user_state(self, event):
         print("I'm entering User state")
+        sender_id = event['sender']['id']
+        send_text_message(sender_id, "回到User state")
 
     def on_enter_weather_state(self, event):
         print("I'm entering weather state")
@@ -80,7 +82,7 @@ class TocMachine(GraphMachine):
         city_url = weather(event['message']['text'])
         send_text_message(sender_id, "以下是中央氣象局:" + event['message']['text'])
         send_text_message(sender_id, city_url)
-        self.go_back()
+        self.go_back(event)
 
     def on_enter_dcard_state(self, event):
         print("I'm entering dcard state")
@@ -102,7 +104,7 @@ class TocMachine(GraphMachine):
         else:
             responese = send_text_message(sender_id, "From Dcard~")
             responese = send_image_url(sender_id, url)
-        self.go_back()
+        self.go_back(event)
 
     def on_enter_pet_unlimit_state(self, event):
         print("I'm entering pet unlimit state")
@@ -110,7 +112,7 @@ class TocMachine(GraphMachine):
         url = pic_url("pet")
         responese = send_text_message(sender_id, "From Dcard~")
         responese = send_image_url(sender_id, url)
-        self.go_back()
+        self.go_back(event)
         
     def on_enter_sex_state(self, event):
         print("I'm entering sex state")
@@ -128,7 +130,7 @@ class TocMachine(GraphMachine):
         else:
             responese = send_text_message(sender_id, "From Dcard~")
             responese = send_image_url(sender_id, url)
-        self.go_back()
+        self.go_back(event)
 
     def on_enter_sex_unlimit_state(self, event):
         print("I'm entering sex unlimit state")
@@ -136,7 +138,12 @@ class TocMachine(GraphMachine):
         url = pic_url("sex")
         responese = send_text_message(sender_id, "From Dcard~")
         responese = send_image_url(sender_id, url)
-        self.go_back()
+        self.go_back(event)
+
+    def on_enter_google_state(self, event):
+        print("I'm entering google state")
+        sender_id = event['sender']['id']
+        send_text_message(sender_id, "你想Google的是?")
 
     def on_enter_google_search_state(self, event):
         print("I'm entering google search state")
@@ -144,4 +151,4 @@ class TocMachine(GraphMachine):
         search_result = google(event['message']['text'])
         send_text_message(sender_id, "我們幫你從Google找到：")
         send_text_message(sender_id, search_result)
-        self.go_back()
+        self.go_back(event)
