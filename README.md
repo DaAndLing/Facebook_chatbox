@@ -14,7 +14,7 @@ Deploying a Facebook chatbox To Heroku📝
 ```cmd
 heroku --version
 ```
-<img src = 'Demo_Pic/weather.jpg' width="900px">
+<img src = 'Demo_Pic/weather.jpg' width="300px">
 今天教大家如何佈署 Flask App 到 [Heroku](https://dashboard.heroku.com/)
 
 [Heroku](https://dashboard.heroku.com/) 免費版本
