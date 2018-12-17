@@ -69,6 +69,7 @@ def pic_url_limit(category, limit):
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36'}
     resp = requests.get(url, headers=headers)
     soup = BeautifulSoup(resp.text,"html.parser")
+    print(resp.text)
     # sel = soup.select("div.PostList_wrapper_2BLUMj a.PostEntry_root_V6g0rd")
     sel = soup.find_all(href=re.compile("/f/" + category))
     sell = soup.find_all(class_=re.compile("PostEntry__LikeCount"))
@@ -135,4 +136,4 @@ def pic_url_limit(category, limit):
     return sel_jpg[0]["src"]
 
 
-# pic_url_limit("sex", 50)
+pic_url_limit("sex", 50)
