@@ -42,7 +42,9 @@ Pet
 ```cmd
 10
 ```
+
 輸入要爬多少讚以上的文（輸入非數字即視為無限制）
+
 <img src = 'Demo_Pic/pic_limit.jpg' width="300px">
 
 #### 錯誤
