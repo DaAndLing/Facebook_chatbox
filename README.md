@@ -8,8 +8,13 @@ Deploying a Facebook chatbox To Heroku📝
 * 輸入關鍵字，快速Google。
 
 功能介紹：
-## Neural Style Transfer System
-<img src = '~/Desktop/weather.jpg' width="900px">
+## 查詢天氣
+此功能會回傳中央氣象局當日指定地區之天氣狀況的網址。
+
+```cmd
+heroku --version
+```
+<img src = 'Demo_Pic/weather.jpg' width="900px">
 今天教大家如何佈署 Flask App 到 [Heroku](https://dashboard.heroku.com/)
 
 [Heroku](https://dashboard.heroku.com/) 免費版本
