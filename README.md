@@ -26,9 +26,8 @@ Deploying a Facebook chatbox To Heroku📝
 
 ### Dcard爬蟲
 
-<figure class="half">
-<img src = 'Demo_Pic/pic_unlimit.jpg' width="300px" /> <img src = 'Demo_Pic/pic_limit.jpg' width="300px" />
-</figure>
+
+<img src = 'Demo_Pic/pic_unlimit.jpg'> <img src = 'Demo_Pic/pic_limit.jpg'>
 
 會前往Dcrad，選取自己想要的板，並爬取圖片。
 
