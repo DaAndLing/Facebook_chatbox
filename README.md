@@ -2,6 +2,10 @@
 
 Deploying a Facebook chatbox To Heroku📝
 
+FSM diagram:
+
+<img src = 'Demo_Pic/fsm.png'>
+
 功能概述：
 * 上中央氣象局網站查詢當日天氣。
 * 在Dcard上選擇自己想要的板爬蟲。
