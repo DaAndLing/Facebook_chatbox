@@ -149,7 +149,7 @@ def webhook_handler():
 	            machine.sex_advance(event)
 	        else:
 	            machine.google_advance(event)
-        return 'OK'
+    return 'OK'
 
 @route('/show-fsm', methods=['GET'])
 def show_fsm():
