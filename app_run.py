@@ -125,7 +125,7 @@ def setup_webhook():
 
 @route("/webhook", method="POST")
 def webhook_handler():
-    # return 'OK'
+    return 'OK'
     body = request.json
     print('\nFSM STATE: ' + machine.state)
     print('Recieve msg:' + body['entry'][0]['messaging'][0]['message']['text'])
