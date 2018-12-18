@@ -25,8 +25,12 @@ Deploying a Facebook chatbox To Heroku📝
 選擇要查詢的城市
 
 ### Dcard爬蟲
-<img src = 'Demo_Pic/pic_unlimit.jpg' width="300px">
-<img src = 'Demo_Pic/pic_limit.jpg' width="300px">
+
+<figure class="half">
+    <img src = 'Demo_Pic/pic_unlimit.jpg' width="300px">
+    <img src = 'Demo_Pic/pic_limit.jpg' width="300px">
+</figure>
+
 會前往Dcrad，選取自己想要的板，並爬取圖片。
 
 ```cmd
@@ -66,9 +70,9 @@ Google
 
 ## 教學
 
-#### 函式介紹
+### 函式介紹
 
-從指定的URL抓取Json格式
+#### 從指定的URL抓取Json格式
 ```python
 import requests 
 import json
@@ -78,14 +82,14 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 resp = requests.get(url, headers=headers)
 ```
 
-解析Json格式
+#### 解析Json格式
 ```python
 from bs4 import BeautifulSoup 
 #將JSON格式轉換為python的dict格式
 soup = BeautifulSoup(resp.text,"html.parser") 
 ```
 
-快速解析key和value
+#### 快速解析key和value
 ```python
 import re
 #依照key從dict中找出需要的value（value只須片段符合）

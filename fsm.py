@@ -69,7 +69,7 @@ class TocMachine(GraphMachine):
     def on_enter_user_state(self, event):
         print("I'm entering User state")
         sender_id = event['sender']['id']
-        send_text_message(sender_id, "回到User state")
+        send_text_message(sender_id, "還有想做的事情嘛？")
 
     def on_enter_weather_state(self, event):
         print("I'm entering weather state")

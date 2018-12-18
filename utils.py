@@ -2,7 +2,8 @@ import requests
 import os
 
 GRAPH_URL = "https://graph.facebook.com/v3.1"
-ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
+# ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
+ACCESS_TOKEN = "EAAfwXNSFdh0BAGdzwU4I3mVZB0HFiSZBQZCeDhMhtXyzlvLdjuJxofOLPDhDVAyZCOrWeDopMhZAcimiBiVvjogN03qaZBnua0JQcKjNOIvK8qAykiaqFVZAZCnbl1WPaCPerlVZAcoHQu6Kb0tRdcjqQdfOMNFjSpQ9cFtxBWMFfFQZDZD"
 
 
 def send_text_message(id, text):
